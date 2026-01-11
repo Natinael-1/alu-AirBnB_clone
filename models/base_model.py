@@ -12,7 +12,8 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key != "__class__":
                     if key in ("created_at", "updated_at"):
-                        value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                        fmt = "%Y-%m-%dT%H:%M:%S.%f"
+                        value = datetime.strptime(value, fmt)
                     setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
@@ -21,7 +22,8 @@ class BaseModel:
             # DO NOT register yet — tests expect this
 
     def __str__(self):
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        cls_name = self.__class__.__name__
+        return "[{}] ({}) {}".format(cls_name, self.id, self.__dict__)
 
     def save(self):
         self.updated_at = datetime.utcnow()

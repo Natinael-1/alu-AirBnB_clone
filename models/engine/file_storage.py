@@ -8,7 +8,8 @@ import os
 
 class FileStorage:
     """
-    Serializes instances to a JSON file and deserializes JSON file to instances.
+    Serializes instances to a JSON file and deserializes JSON file
+    to instances.
     """
     # Private class attributes
     __file_path = "file.json"
