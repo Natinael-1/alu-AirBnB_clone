@@ -2,6 +2,7 @@
 """ This module defines the Place class """
 from models.base_model import BaseModel
 
+
 class Place(BaseModel):
     """ Represents a Place """
     city_id = ""
