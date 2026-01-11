@@ -44,17 +44,20 @@ class FileStorage:
         Deserializes the JSON file to __objects.
         Only if the file exists.
         """
-        from models.base_model import BaseModel  # Import here to avoid circular dependency
+        from models.base_model import BaseModel
+        from models.user import User
+        
+        classes = {
+            "BaseModel": BaseModel,
+            "User": User
+        }
         
         if os.path.exists(FileStorage.__file_path):
             with open(FileStorage.__file_path, "r") as f:
                 obj_dict = json.load(f)
                 
-            # Loop through the dictionary and recreate the objects
             for key, value in obj_dict.items():
                 class_name = value["__class__"]
-                if class_name == "BaseModel":
-                    # Create a new instance of BaseModel using the dictionary
-                    obj = BaseModel(**value)
-                    # Add it to the storage
-                    self.new(obj)
+                if class_name in classes:
+                    cls = classes[class_name]
+                    self.new(cls(**value))
