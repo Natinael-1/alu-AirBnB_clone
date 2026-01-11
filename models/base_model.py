@@ -39,10 +39,11 @@ class BaseModel:
 
     def to_dict(self):
         """
-        Returns a dictionary containing all keys/values of __dict__.
+        Returns a dictionary containing all keys/values of __dict__. serialization
         """
         new_dict = self.__dict__.copy()
         new_dict["__class__"] = self.__class__.__name__
         new_dict["created_at"] = self.created_at.isoformat()
         new_dict["updated_at"] = self.updated_at.isoformat()
         return new_dict
+
